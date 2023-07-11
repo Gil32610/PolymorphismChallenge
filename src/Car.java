@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class Car {
     private String description;
 
@@ -20,8 +22,42 @@ public class Car {
 
     //factory method
     public static Car getCar(String type) {
+        Scanner s = new Scanner(System.in);
         return switch (type.toUpperCase().charAt(0)) {
-            default -> new Car(type);
+            case 'H' -> {
+                System.out.println("Enter car description:");
+                String description = s.nextLine();
+                System.out.println("Enter battery size:");
+                int batterySize = Integer.parseInt(s.nextLine());
+                System.out.println("Enter cylinder quantity:");
+                int cylinders = Integer.parseInt(s.nextLine());
+                System.out.println("Enter avg km per litre:");
+                int avgKmPerLitre = Integer.parseInt(s.nextLine());
+                yield new HybridCar(description, avgKmPerLitre, batterySize, cylinders);
+            }
+            case 'G' -> {
+                System.out.println("Enter car description:");
+                String description = s.nextLine();
+                System.out.println("Enter cylinder quantity:");
+                int cylinders = Integer.parseInt(s.nextLine());
+                System.out.println("Enter avg km per litre:");
+                int avgKmPerLitre = Integer.parseInt(s.nextLine());
+                yield new GasPoweredCar(description, avgKmPerLitre, cylinders);
+            }
+            case 'E' -> {
+                System.out.println("Enter car description:");
+                String description = s.nextLine();
+                System.out.println("Enter battery size:");
+                int batterySize = Integer.parseInt(s.nextLine());
+                System.out.println("Enter avg km per charge:");
+                int avgKmPerLitre = Integer.parseInt(s.nextLine());
+                yield new ElectricCar(description, avgKmPerLitre, batterySize);
+            }
+            default -> {
+                System.out.println("Enter Car description:");
+                String description = s.nextLine();
+                yield new Car(description);
+            }
 
         };
     }
